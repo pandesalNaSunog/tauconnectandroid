@@ -66,6 +66,40 @@ class PostAdapter(private val list: MutableList<PostsItem>): RecyclerView.Adapte
                 commentsRecycler.adapter = commentsAdapter
                 commentsRecycler.layoutManager = LinearLayoutManager(context)
 
+                val commentText = commentsSheetView.findViewById<EditText>(R.id.commentText)
+                val postCommentButton = commentsSheetView.findViewById<Button>(R.id.postComment)
+
+                postCommentButton.setOnClickListener {
+                    if(commentText.text.toString().isEmpty()){
+                        commentText.error = "Please fill out this field."
+                    }else{
+                        val jsonObject = JSONObject()
+                        jsonObject.put("comment", commentText.text.toString())
+                        jsonObject.put("post_id", curr.post_id)
+                        val request = jsonObject.toString().toRequestBody("application/json".toMediaTypeOrNull())
+                        CoroutineScope(Dispatchers.IO).launch {
+                            val comment = try{ RetrofitInstance.retro.postComment("Bearer $token", request) }
+                            catch(e: SocketTimeoutException){
+                                withContext(Dispatchers.Main){
+                                    alerts.timeout()
+                                }
+                                return@launch
+                            }catch(e: Exception){
+                                withContext(Dispatchers.Main){
+                                    alerts.error(e.toString())
+                                }
+                                return@launch
+                            }
+                            withContext(Dispatchers.Main){
+                                commentText.text.clear()
+                                commentsAdapter.add(comment)
+                            }
+                        }
+                    }
+                }
+
+
+
                 val jsonObject = JSONObject()
                 jsonObject.put("post_id", curr.post_id)
                 val request = jsonObject.toString().toRequestBody("application/json".toMediaTypeOrNull())

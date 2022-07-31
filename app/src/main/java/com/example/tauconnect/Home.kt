@@ -59,6 +59,12 @@ class Home : Fragment() {
         val postAdapter = PostAdapter(mutableListOf())
         postRecycler.adapter = postAdapter
         postRecycler.layoutManager = LinearLayoutManager(requireContext())
+
+        val trendinTopicsRecycler = view.findViewById<RecyclerView>(R.id.trendingTopicRecycler)
+        val trendingTopicAdapter = TrendingTopicAdapter(mutableListOf())
+        trendinTopicsRecycler.adapter = trendingTopicAdapter
+        trendinTopicsRecycler.layoutManager = LinearLayoutManager(requireContext())
+
         val progress = LoadingScreen(requireContext())
         val alerts = Alerts(requireContext())
         val postText = view.findViewById<TextInputEditText>(R.id.postText)
@@ -118,12 +124,15 @@ class Home : Fragment() {
 
             withContext(Dispatchers.Main){
                 progress.dismiss()
-                if(posts.isEmpty()){
+                if(posts.posts.isEmpty()){
                     emptyPosts.isVisible = true
                 }else{
                     emptyPosts.isVisible = false
-                    for(i in posts.indices){
-                        postAdapter.add(posts[i])
+                    for(i in posts.posts.indices){
+                        postAdapter.add(posts.posts[i])
+                    }
+                    for(i in posts.trending_topics.indices){
+                        trendingTopicAdapter.add(posts.trending_topics[i])
                     }
                 }
 

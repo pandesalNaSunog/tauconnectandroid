@@ -6,19 +6,10 @@
     android:layout_height="match_parent"
     tools:context=".Home">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/postsRecycler"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="match_parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cardView2" />
-
-    <androidx.cardview.widget.CardView
-        android:id="@+id/cardView2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -26,41 +17,92 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="15dp">
+            android:orientation="vertical">
 
-            <com.google.android.material.textfield.TextInputLayout
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/postText"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="What's on your mind?" />
-            </com.google.android.material.textfield.TextInputLayout>
 
-            <android.widget.Button
-                android:id="@+id/postPost"
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardView2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="15dp">
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/postText"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="What's on your mind?" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <android.widget.Button
+                        android:id="@+id/postPost"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:background="@drawable/solid_green_btn"
+                        android:text="Post"
+                        android:textAllCaps="false"
+                        android:textColor="@color/white"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
                 android:layout_marginTop="10dp"
-                android:background="@drawable/solid_green_btn"
-                android:text="Post"
-                android:textAllCaps="false"
-                android:textColor="@color/white"
-                android:textSize="20sp"
-                android:textStyle="bold" />
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <LinearLayout
+                    android:padding="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Trending Topics"
+                        android:textStyle="bold"
+                        android:textSize="20sp"/>
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/trendingTopicRecycler"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/postsRecycler"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/cardView2" />
+
+
         </LinearLayout>
-    </androidx.cardview.widget.CardView>
+    </ScrollView>
 
     <TextView
         android:id="@+id/emptyPosts"
-        android:paddingStart="50dp"
-        android:paddingEnd="50dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:paddingStart="50dp"
+        android:paddingEnd="50dp"
         android:text="The Administrator has not posted anything yet"
         android:textAlignment="center"
         android:textSize="20sp"

@@ -13,7 +13,7 @@ interface Requests {
     suspend fun login(@Body request: RequestBody): LoginDetails
 
     @GET("/tauApi/public/api/posts")
-    suspend fun getPosts(): Posts
+    suspend fun getPosts(): PostsWithTrendingTopics
 
     @POST("/tauApi/public/api/logout")
     suspend fun logout(@Header("Authorization") token: String): Response<ResponseBody>
