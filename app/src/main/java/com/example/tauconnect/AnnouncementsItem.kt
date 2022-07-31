@@ -5,5 +5,7 @@ data class AnnouncementsItem(
     val description: String,
     val id: Int,
     val title: String,
-    val updated_at: String
+    val updated_at: String,
+    val user: UserX,
+    val user_id: Int,
 )

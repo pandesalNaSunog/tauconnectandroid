@@ -53,4 +53,7 @@ interface Requests {
 
     @POST("tauApi/public/api/post-comments")
     suspend fun getPostComments(@Header("Authorization") token: String, @Body request: RequestBody): List<CommentX>
+
+    @POST("tauApi/public/api/post-announcement")
+    suspend fun postAnnouncement(@Header("Authorization") token: String, @Body request: RequestBody): AnnouncementsItem
 }

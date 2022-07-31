@@ -69,6 +69,27 @@ class UserDatabase(context: Context): SQLiteOpenHelper(context, databaseName, nu
 
         return stoken
     }
+    @SuppressLint("Range")
+    fun getUserType(): String{
+        val db = this.readableDatabase
+        val cursor: Cursor
+        val query = "SELECT * FROM $tableName"
+
+        var stoken = ""
+        try{
+            cursor = db.rawQuery(query, null)
+        }catch (e: SQLiteException){
+            db.execSQL(query)
+            return stoken
+        }
+
+
+        if(cursor.moveToFirst()){
+            stoken = cursor.getString(cursor.getColumnIndex(userType))
+        }
+
+        return stoken
+    }
 
     fun getSize(): Int{
         val db = this.readableDatabase

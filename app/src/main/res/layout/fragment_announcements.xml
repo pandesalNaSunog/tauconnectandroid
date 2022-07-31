@@ -13,7 +13,7 @@
         android:layout_margin="100dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="The Administrator has not posted announcements yet"
+        android:text="No Announcements"
         android:textSize="23sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -21,12 +21,9 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/latestAnnouncement"
+        android:id="@+id/postAnnouncementCard"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        app:cardCornerRadius="10dp"
-        app:cardElevation="5dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -36,75 +33,42 @@
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
             android:orientation="vertical">
-            <androidx.constraintlayout.widget.ConstraintLayout
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <ImageView
-                    android:layout_margin="10dp"
-                    android:id="@+id/imageView3"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:src="@drawable/tau_logo"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <LinearLayout
-                    android:layout_margin="10dp"
-                    android:layout_width="0dp"
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/postAnnouncementText"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/imageView3"
-                    app:layout_constraintTop_toTopOf="parent">
+                    android:hint="Post an Announcement" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Latest Announcement"
-                        android:textSize="20sp"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:id="@+id/date"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
-                </LinearLayout>
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-            <TextView
-                android:id="@+id/announcement"
+            <android.widget.Button
+                android:id="@+id/postAnnouncement"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="50dp"
-                android:textAlignment="center"
-                android:textSize="35sp" />
-
+                android:layout_marginTop="10dp"
+                android:background="@drawable/solid_green_btn"
+                android:text="Post"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                android:textStyle="bold" />
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 
-    <TextView
-        android:id="@+id/previousAnnouncements"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:text="Previous Announcements"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/latestAnnouncement" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/announcementRecycler"
-        android:layout_margin="10dp"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_margin="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/previousAnnouncements" />
+        app:layout_constraintTop_toBottomOf="@+id/postAnnouncementCard" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

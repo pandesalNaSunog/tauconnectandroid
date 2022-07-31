@@ -7,15 +7,20 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.textfield.TextInputEditText
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.RequestBody.Companion.toRequestBody
+import org.json.JSONObject
 import java.net.SocketTimeoutException
 
 // TODO: Rename parameter arguments, choose names that match
@@ -51,22 +56,59 @@ class AnnouncementsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val db = UserDatabase(requireContext())
+        val userType = db.getUserType()
+        val token = db.getToken()
+        val announcementCard = view.findViewById<CardView>(R.id.postAnnouncementCard)
+        val postAnnouncementText = view.findViewById<TextInputEditText>(R.id.postAnnouncementText)
+        val postAnnouncement = view.findViewById<Button>(R.id.postAnnouncement)
+        val progress = LoadingScreen(requireContext())
+        val alerts = Alerts(requireContext())
 
-        val date = view.findViewById<TextView>(R.id.date)
-        val announcement = view.findViewById<TextView>(R.id.announcement)
         val announcementRecycler = view.findViewById<RecyclerView>(R.id.announcementRecycler)
         val announcementAdapter = AnnouncementAdapter(mutableListOf())
         announcementRecycler.adapter = announcementAdapter
         announcementRecycler.layoutManager = LinearLayoutManager(requireContext())
-        val latestAnnouncement = view.findViewById<CardView>(R.id.latestAnnouncement)
-        val previousAnnouncements = view.findViewById<TextView>(R.id.previousAnnouncements)
+
+        postAnnouncement.setOnClickListener {
+            if(postAnnouncementText.text.toString().isEmpty()){
+                postAnnouncement.error = "Please fill out this field"
+            }else{
+                progress.showLoadingScreen("Posting...")
+                val jsonObject = JSONObject()
+                jsonObject.put("announcement", postAnnouncement.text.toString())
+                val request = jsonObject.toString().toRequestBody("application/json".toMediaTypeOrNull())
+
+                CoroutineScope(Dispatchers.IO).launch {
+                    val announcement = try{ RetrofitInstance.retro.postAnnouncement("Bearer $token",request) }
+                    catch(e: SocketTimeoutException){
+                        withContext(Dispatchers.Main){
+                            progress.dismiss()
+                            alerts.timeout()
+                        }
+                        return@launch
+                    }catch(e: Exception){
+                        withContext(Dispatchers.Main){
+                            progress.dismiss()
+                            alerts.error(e.toString())
+                        }
+                        return@launch
+                    }
+                    withContext(Dispatchers.Main){
+                        progress.dismiss()
+                        announcementAdapter.add(announcement)
+                    }
+                }
+            }
+        }
+
+        announcementCard.isVisible = userType != "Student"
+
+
         val emptyAnnouncements = view.findViewById<TextView>(R.id.emptyAnnouncements)
 
-        latestAnnouncement.isVisible = false
-        previousAnnouncements.isVisible = false
         emptyAnnouncements.isVisible = false
-        val progress = LoadingScreen(requireContext())
-        val alerts = Alerts(requireContext())
+
 
         progress.showLoadingScreen("Loading...")
 
@@ -87,35 +129,8 @@ class AnnouncementsFragment : Fragment() {
             }
             withContext(Dispatchers.Main){
                 progress.dismiss()
-                if(announcements.size == 0){
-                    emptyAnnouncements.isVisible = true
-                    latestAnnouncement.isVisible = false
-                    previousAnnouncements.isVisible = false
-                }else if(announcements.size == 1){
-                    emptyAnnouncements.isVisible = false
-                    latestAnnouncement.isVisible = true
-                    previousAnnouncements.isVisible = false
-                    for(i in announcements.indices){
-                        if(i == 0){
-                            date.text = announcements[i].created_at
-                            announcement.text = announcements[i].description
-                        }else{
-                            announcementAdapter.add(announcements[i])
-                        }
-
-                    }
-                }else{
-                    emptyAnnouncements.isVisible = false
-                    latestAnnouncement.isVisible = true
-                    previousAnnouncements.isVisible = true
-                    for(i in announcements.indices){
-                        if(i == 0){
-                            date.text = announcements[i].created_at
-                            announcement.text = announcements[i].description
-                        }else{
-                            announcementAdapter.add(announcements[i])
-                        }
-                    }
+                for(i in announcements.indices){
+                    announcementAdapter.add(announcements[i])
                 }
 
             }

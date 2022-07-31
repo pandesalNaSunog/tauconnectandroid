@@ -18,9 +18,10 @@ class AnnouncementAdapter(private val list: MutableList<AnnouncementsItem>): Rec
         holder.itemView.apply {
             val announcement = findViewById<TextView>(R.id.announcement)
             val date = findViewById<TextView>(R.id.date)
-
+            val name = findViewById<TextView>(R.id.name)
             announcement.text = curr.description
             date.text = curr.created_at
+            name.text = curr.user.name
         }
     }
 
