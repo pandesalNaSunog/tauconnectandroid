@@ -53,6 +53,7 @@ class Profile : Fragment() {
 
 
     private lateinit var profilePicture: CircleImageView
+    private lateinit var userTypeString: String
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -129,7 +130,7 @@ class Profile : Fragment() {
         val name = view.findViewById<TextView>(R.id.name)
         val email = view.findViewById<TextView>(R.id.email)
         val userType = view.findViewById<TextView>(R.id.userType)
-
+        val recentComplains = view.findViewById<TextView>(R.id.textView2)
         val complaintRecycler = view.findViewById<RecyclerView>(R.id.complaintsRecycler)
         val complaintAdapter = ComplaintAdapter(mutableListOf())
         val emptyComplaints = view.findViewById<TextView>(R.id.emptyComplaints)
@@ -201,6 +202,14 @@ class Profile : Fragment() {
                 name.text = profile.name
                 email.text = profile.email
                 userType.text = "(${profile.user_type})"
+                userTypeString = profile.user_type
+
+                if(userTypeString == "Student"){
+                    recentComplains.isVisible = true
+                }else{
+                    recentComplains.isVisible = false
+                    emptyComplaints.isVisible = false
+                }
             }
         }
 
@@ -214,6 +223,9 @@ class Profile : Fragment() {
             val logout = sheetView.findViewById<Button>(R.id.logout)
             val submitComplaint = sheetView.findViewById<Button>(R.id.submitComplaint)
             val updateProfile = sheetView.findViewById<Button>(R.id.updateProfile)
+
+            submitComplaint.isVisible = false
+            submitComplaint.isVisible = userTypeString == "Student"
             updateProfile.setOnClickListener {
                 val updateProfileDialog = AlertDialog.Builder(requireContext())
                 val updateProfileView = LayoutInflater.from(requireContext()).inflate(R.layout.update_profile_form, null)
