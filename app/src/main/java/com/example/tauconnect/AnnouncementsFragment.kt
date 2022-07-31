@@ -76,7 +76,7 @@ class AnnouncementsFragment : Fragment() {
             }else{
                 progress.showLoadingScreen("Posting...")
                 val jsonObject = JSONObject()
-                jsonObject.put("announcement", postAnnouncement.text.toString())
+                jsonObject.put("announcement", postAnnouncementText.text.toString())
                 val request = jsonObject.toString().toRequestBody("application/json".toMediaTypeOrNull())
 
                 CoroutineScope(Dispatchers.IO).launch {
@@ -97,6 +97,7 @@ class AnnouncementsFragment : Fragment() {
                     withContext(Dispatchers.Main){
                         progress.dismiss()
                         announcementAdapter.add(announcement)
+                        postAnnouncementText.text?.clear()
                     }
                 }
             }
