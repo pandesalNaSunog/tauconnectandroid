@@ -301,15 +301,19 @@ class Profile : Fragment() {
                 val complaintAlertShow = complaintAlert.show()
 
                 val complaintText = complaintAlertView.findViewById<TextInputEditText>(R.id.complaintText)
+                val categoryText = complaintAlertView.findViewById<TextInputEditText>(R.id.categoryText)
                 val confirmComplaint = complaintAlertView.findViewById<Button>(R.id.confirmComplaint)
 
                 confirmComplaint.setOnClickListener {
                     if(complaintText.text.toString().isEmpty()){
                         complaintText.error = "Please fill out this field."
+                    }else if(categoryText.text.toString().isEmpty()){
+                        categoryText.error = "Please fill out this field."
                     }else{
                         progress.showLoadingScreen("Submitting...")
                         val jsonObject = JSONObject()
                         jsonObject.put("complaint", complaintText.text.toString())
+                        jsonObject.put("category", categoryText.text.toString())
                         val request = jsonObject.toString().toRequestBody("application/json".toMediaTypeOrNull())
                         CoroutineScope(Dispatchers.IO).launch {
                             val complaintResponse = try{ RetrofitInstance.retro.submitComplaint("Bearer $token",request) }

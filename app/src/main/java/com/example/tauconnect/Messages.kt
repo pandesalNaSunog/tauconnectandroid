@@ -1,18 +1,26 @@
 package com.example.tauconnect
 
+import android.app.AlertDialog
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.TextView
+import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.textfield.TextInputEditText
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.RequestBody.Companion.toRequestBody
+import org.json.JSONObject
 import java.net.SocketTimeoutException
 
 // TODO: Rename parameter arguments, choose names that match
@@ -56,9 +64,101 @@ class Messages : Fragment() {
         usersRecycler.layoutManager = LinearLayoutManager(requireContext())
         val progress = LoadingScreen(requireContext())
         val alerts = Alerts(requireContext())
-
-
+        val writeMessage = view.findViewById<Button>(R.id.writeMessage)
         val emptyUsers = view.findViewById<TextView>(R.id.emptyUsers)
+
+        writeMessage.setOnClickListener {
+            val createConvoAlert = AlertDialog.Builder(requireContext())
+            val createConvoAlertView = LayoutInflater.from(requireContext()).inflate(R.layout.create_conversation, null)
+
+            createConvoAlert.setView(createConvoAlertView)
+
+            val showCreateConvoAlert = createConvoAlert.show()
+
+            val to = createConvoAlertView.findViewById<Button>(R.id.to)
+            val message = createConvoAlertView.findViewById<TextInputEditText>(R.id.messageText)
+            val send = createConvoAlertView.findViewById<Button>(R.id.send)
+
+            to.setOnClickListener {
+
+                val usersToMessageAlert = AlertDialog.Builder(requireContext())
+                val usersToMessageAlertView = LayoutInflater.from(requireContext()).inflate(R.layout.new_users_to_message, null)
+                usersToMessageAlert.setView(usersToMessageAlertView)
+                val showUsersToMessageAlert = usersToMessageAlert.show()
+
+                val usersToMessageRecycler = usersToMessageAlertView.findViewById<RecyclerView>(R.id.usersToMessageRecycler)
+                val usersToMessageAdapter = UsersToMessageAdapter(mutableListOf(), to, showUsersToMessageAlert)
+
+                usersToMessageRecycler.adapter = usersToMessageAdapter
+                usersToMessageRecycler.layoutManager = LinearLayoutManager(requireContext())
+
+
+                CoroutineScope(Dispatchers.IO).launch {
+                    val user = try{RetrofitInstance.retro.getNewUsersToMessage("Bearer $token")}
+                    catch(e: SocketTimeoutException){
+                        withContext(Dispatchers.Main){
+                            progress.dismiss()
+                            alerts.timeout()
+                        }
+                        return@launch
+                    }catch(e: Exception){
+                        withContext(Dispatchers.Main){
+                            progress.dismiss()
+                            alerts.error(e.toString())
+                        }
+                        return@launch
+                    }
+
+                    withContext(Dispatchers.Main){
+                        for(i in user.indices) {
+                            usersToMessageAdapter.add(user[i])
+                        }
+                    }
+                }
+            }
+
+            send.setOnClickListener {
+                if(to.tag == 0){
+                    to.error = "Please choose a recipient"
+                }else if(message.text.toString().isEmpty()){
+                    message.error = "Please fill out this field"
+                }else{
+                    progress.showLoadingScreen("Sending...")
+                    val jsonObject = JSONObject()
+                    jsonObject.put("receiver_id", to.tag)
+                    jsonObject.put("message", message.text.toString())
+                    val request = jsonObject.toString().toRequestBody("application/json".toMediaTypeOrNull())
+                    CoroutineScope(Dispatchers.IO).launch {
+                        val user = try{RetrofitInstance.retro.sendNewMessage("Bearer $token", request)}
+                        catch(e: SocketTimeoutException){
+                            withContext(Dispatchers.Main){
+                                progress.dismiss()
+                                alerts.timeout()
+
+                            }
+                            return@launch
+                        }catch(e: Exception){
+                            withContext(Dispatchers.Main){
+                                progress.dismiss()
+                                alerts.error(e.toString())
+                            }
+                            return@launch
+                        }
+
+                        withContext(Dispatchers.Main){
+                            progress.dismiss()
+                            userAdapter.add(user)
+
+                            showCreateConvoAlert.dismiss()
+                            emptyUsers.isVisible = false
+                        }
+                    }
+                }
+            }
+        }
+
+
+
 
         emptyUsers.isVisible = false
 

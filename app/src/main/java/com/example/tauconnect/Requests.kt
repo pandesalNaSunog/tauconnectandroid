@@ -42,6 +42,9 @@ interface Requests {
     @POST("tauApi/public/api/send-message")
     suspend fun sendMessage(@Header("Authorization") token: String, @Body request: RequestBody): MessagesItem
 
+    @POST("tauApi/public/api/send-new-message")
+    suspend fun sendNewMessage(@Header("Authorization") token: String, @Body request: RequestBody): User
+
     @POST("tauApi/public/api/update-profile-picture")
     suspend fun updateProfilePicture(@Header("Authorization") token: String, @Body request: RequestBody): ProfilePicture
 
@@ -56,4 +59,10 @@ interface Requests {
 
     @POST("tauApi/public/api/post-announcement")
     suspend fun postAnnouncement(@Header("Authorization") token: String, @Body request: RequestBody): AnnouncementsItem
+
+    @GET("tauApi/public/api/notifications")
+    suspend fun getNotifications(@Header("Authorization") token: String): Notification
+
+    @GET("tauApi/public/api/new-users-to-message")
+    suspend fun getNewUsersToMessage(@Header("Authorization") token: String): Users
 }

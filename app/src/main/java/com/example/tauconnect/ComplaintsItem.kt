@@ -7,5 +7,6 @@ data class ComplaintsItem(
     val status: String,
     val updated_at: String,
     val user: UserX,
-    val user_id: String
+    val user_id: String,
+    val category: String
 )

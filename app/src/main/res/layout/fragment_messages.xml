@@ -7,13 +7,29 @@
     android:layout_height="match_parent"
     tools:context=".Messages">
 
+
+    <android.widget.Button
+        android:id="@+id/writeMessage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/solid_green_btn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_margin="10dp"
+        android:text="Write New Message"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        android:textStyle="bold"/>
+
     <androidx.recyclerview.widget.RecyclerView
+        android:layout_marginTop="10dp"
         android:id="@+id/usersRecycler"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/writeMessage" />
 
     <TextView
         android:id="@+id/emptyUsers"

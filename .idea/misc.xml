@@ -4,6 +4,7 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/Jem/AndroidStudioProjects/TauConnect/app/src/main/res/drawable/green_stroke_button.xml" value="0.228" />
+        <entry key="..\:/Users/Jem/AndroidStudioProjects/TauConnect/app/src/main/res/drawable/green_stroke_button_not_rounded.xml" value="0.261" />
         <entry key="..\:/Users/Jem/AndroidStudioProjects/TauConnect/app/src/main/res/drawable/ic_baseline_account_circle_24.xml" value="0.228" />
         <entry key="..\:/Users/Jem/AndroidStudioProjects/TauConnect/app/src/main/res/drawable/loading_screen_bg.xml" value="0.228" />
         <entry key="..\:/Users/Jem/AndroidStudioProjects/TauConnect/app/src/main/res/drawable/menu_color.xml" value="0.228" />
@@ -20,7 +21,8 @@
         <entry key="..\:/Users/Jem/AndroidStudioProjects/TauConnect/app/src/main/res/layout/all_comments.xml" value="0.2109375" />
         <entry key="..\:/Users/Jem/AndroidStudioProjects/TauConnect/app/src/main/res/layout/announcement_item.xml" value="0.2703125" />
         <entry key="..\:/Users/Jem/AndroidStudioProjects/TauConnect/app/src/main/res/layout/comment_item.xml" value="0.203515625" />
-        <entry key="..\:/Users/Jem/AndroidStudioProjects/TauConnect/app/src/main/res/layout/complaint_item.xml" value="0.22179487179487178" />
+        <entry key="..\:/Users/Jem/AndroidStudioProjects/TauConnect/app/src/main/res/layout/complaint_item.xml" value="0.33" />
+        <entry key="..\:/Users/Jem/AndroidStudioProjects/TauConnect/app/src/main/res/layout/create_conversation.xml" value="0.29791666666666666" />
         <entry key="..\:/Users/Jem/AndroidStudioProjects/TauConnect/app/src/main/res/layout/fragment_announcements.xml" value="0.2713541666666667" />
         <entry key="..\:/Users/Jem/AndroidStudioProjects/TauConnect/app/src/main/res/layout/fragment_home.xml" value="0.25" />
         <entry key="..\:/Users/Jem/AndroidStudioProjects/TauConnect/app/src/main/res/layout/fragment_messages.xml" value="0.2713541666666667" />
@@ -29,11 +31,13 @@
         <entry key="..\:/Users/Jem/AndroidStudioProjects/TauConnect/app/src/main/res/layout/message_bubble_receiver.xml" value="0.2713541666666667" />
         <entry key="..\:/Users/Jem/AndroidStudioProjects/TauConnect/app/src/main/res/layout/message_bubble_sender.xml" value="0.2703125" />
         <entry key="..\:/Users/Jem/AndroidStudioProjects/TauConnect/app/src/main/res/layout/more_options.xml" value="0.2703125" />
+        <entry key="..\:/Users/Jem/AndroidStudioProjects/TauConnect/app/src/main/res/layout/new_users_to_message.xml" value="0.29791666666666666" />
         <entry key="..\:/Users/Jem/AndroidStudioProjects/TauConnect/app/src/main/res/layout/post_item.xml" value="0.33" />
         <entry key="..\:/Users/Jem/AndroidStudioProjects/TauConnect/app/src/main/res/layout/submit_complaint.xml" value="0.2703125" />
         <entry key="..\:/Users/Jem/AndroidStudioProjects/TauConnect/app/src/main/res/layout/trending_topic_item.xml" value="0.6583679114799447" />
         <entry key="..\:/Users/Jem/AndroidStudioProjects/TauConnect/app/src/main/res/layout/update_profile_form.xml" value="0.2713541666666667" />
         <entry key="..\:/Users/Jem/AndroidStudioProjects/TauConnect/app/src/main/res/layout/users_item.xml" value="0.5" />
+        <entry key="..\:/Users/Jem/AndroidStudioProjects/TauConnect/app/src/main/res/layout/users_to_message_item.xml" value="0.2234375" />
         <entry key="..\:/Users/Jem/AndroidStudioProjects/TauConnect/app/src/main/res/menu/nav_menu.xml" value="0.18802083333333333" />
       </map>
     </option>

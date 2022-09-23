@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="15dp">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:text="Create a Conversation"
+        android:textStyle="bold"
+        android:layout_marginBottom="10dp"
+        android:textSize="20sp"/>
+
+    <android.widget.Button
+        android:id="@+id/to"
+        android:background="@drawable/green_stroke_button_not_rounded"
+        android:text="To:"
+        android:textColor="@color/green"
+        android:textAllCaps="false"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/messageText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Write Your Message Here..."/>
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <android.widget.Button
+        android:id="@+id/send"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/solid_green_btn"
+        android:layout_marginTop="10dp"
+        android:text="Send"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        android:textStyle="bold"/>
+
+</LinearLayout>

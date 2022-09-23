@@ -19,7 +19,9 @@ class ComplaintAdapter(private val list: MutableList<ComplaintsItem>): RecyclerV
             val complain = findViewById<TextView>(R.id.complain)
             val status = findViewById<TextView>(R.id.status)
             val date = findViewById<TextView>(R.id.date)
+            val category = findViewById<TextView>(R.id.category)
 
+            category.text = "To: ${curr.category}"
             complain.text = curr.complaint
             status.text = curr.status
             date.text = curr.created_at
